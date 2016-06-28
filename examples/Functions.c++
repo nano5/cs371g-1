@@ -76,7 +76,7 @@ int main () {
     auto h = my_function;
 
     assert(sizeof(f) ==  8);
-cout << sizeof(g) << endl;
+    cout << sizeof(g) << endl;
     assert(sizeof(g) == 48);
     assert(sizeof(h) ==  8);
 
