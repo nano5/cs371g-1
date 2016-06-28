@@ -77,7 +77,11 @@ int main () {
 
     assert(sizeof(f) ==  8);
     cout << sizeof(g) << endl;
-    assert(sizeof(g) == 48);
+    #ifdef __APPLE__
+        assert(sizeof(g) == 48);
+    #else
+        assert(sizeof(g) == 32);
+    #endif
     assert(sizeof(h) ==  8);
 
     assert(my_function(2, 3) == 5);
