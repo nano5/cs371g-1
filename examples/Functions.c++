@@ -82,7 +82,7 @@ int main () {
     #else
         assert(sizeof(g) == 32);
     #endif
-    assert(sizeof(h) ==  8);
+    assert(sizeof(h) == 8);
 
     assert(my_function(2, 3) == 5);
     assert(          f(2, 3) == 5);
@@ -105,8 +105,12 @@ int main () {
     auto h = [] (int i, int j) -> int {return i + j;};
 
     assert(sizeof(f) ==  8);
-    assert(sizeof(g) == 48);
-    assert(sizeof(h) ==  1);
+    #ifdef __APPLE__
+        assert(sizeof(g) == 48);
+    #else
+        assert(sizeof(g) == 32);
+    #endif
+    assert(sizeof(h) == 1);
 
     assert([] (int i, int j) -> int {return i + j;}(2, 3) == 5);
     assert(                                       f(2, 3) == 5);
@@ -129,8 +133,12 @@ int main () {
     auto h = my_lambda();
 
     assert(sizeof(f) ==  8);
-    assert(sizeof(g) == 48);
-    assert(sizeof(h) ==  8);
+    #ifdef __APPLE__
+        assert(sizeof(g) == 48);
+    #else
+        assert(sizeof(g) == 32);
+    #endif
+    assert(sizeof(h) == 8);
 
     assert(my_lambda()(2, 3) == 5);
     assert(          f(2, 3) == 5);
@@ -154,8 +162,12 @@ int main () {
     UF2  g = [i] (int j) -> int {return i + j;};
     auto h = [i] (int j) -> int {return i + j;};
 
-    assert(sizeof(g) == 48);
-    assert(sizeof(h) ==  4);
+    #ifdef __APPLE__
+        assert(sizeof(g) == 48);
+    #else
+        assert(sizeof(g) == 32);
+    #endif
+    assert(sizeof(h) == 4);
 
     assert([i] (int j) -> int {return i + j;}(3) == 5);
     assert(                                 g(3) == 5);
@@ -188,8 +200,13 @@ int main () {
     UF2  g = my_closure_by_value(2);
     auto h = my_closure_by_value(2);
 
-    assert(sizeof(g) == 48);
-    assert(sizeof(h) == 48);
+    #ifdef __APPLE__
+        assert(sizeof(g) == 48);
+        assert(sizeof(h) == 48);
+    #else
+        assert(sizeof(g) == 32);
+        assert(sizeof(h) == 32);
+    #endif
 
     assert(my_closure_by_value(2)(3) == 5);
     assert(                     g(3) == 5);
@@ -224,7 +241,11 @@ int main () {
     UF2  g = [&i] (int j) -> int {return i++ + j;};
     auto h = [&i] (int j) -> int {return i++ + j;};
 
-    assert(sizeof(g) == 48);
+    #ifdef __APPLE__
+        assert(sizeof(g) == 48);
+    #else
+        assert(sizeof(g) == 32);
+    #endif
     assert(sizeof(h) ==  8);
 
     assert([&i] (int j) -> int {return i++ + j;}(3) == 5);
@@ -265,8 +286,13 @@ int main () {
     UF2  g = my_closure_by_reference(i);
     auto h = my_closure_by_reference(i);
 
-    assert(sizeof(g) == 48);
-    assert(sizeof(h) == 48);
+    #ifdef __APPLE__
+        assert(sizeof(g) == 48);
+        assert(sizeof(h) == 48);
+    #else
+        assert(sizeof(g) == 32);
+        assert(sizeof(h) == 32);
+    #endif
 
     assert(my_closure_by_reference(i)(3) == 5);
     assert(                         g(3) == 6);
@@ -305,7 +331,11 @@ int main () {
     auto h = &A::my_method;
 
     assert(sizeof(f) == 16);
-    assert(sizeof(g) == 48);
+    #ifdef __APPLE__
+        assert(sizeof(g) == 48);
+    #else
+        assert(sizeof(g) == 32);
+    #endif
     assert(sizeof(h) == 16);
 
     A x = 2;
@@ -325,8 +355,12 @@ int main () {
     auto h = B(2);
 
     assert(sizeof(f) ==  4);
-    assert(sizeof(g) == 48);
-    assert(sizeof(h) ==  4);
+    #ifdef __APPLE__
+        assert(sizeof(g) == 48);
+    #else
+        assert(sizeof(g) == 32);
+    #endif
+    assert(sizeof(h) == 4);
 
     assert(B(2)(3) == 5);
     assert(   f(3) == 5);
